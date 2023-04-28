@@ -1,0 +1,37 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "metadata": {
+      "_generator": {
+        "name": "bicep",
+        "version": "0.15.31.15270",
+        "templateHash": "3941101056511835882"
+      }
+    },
+    "parameters": {
+        "name": {
+            "value": "SJEHHC-RG01-WebApp01-V0002"
+        },
+        "alwaysOn": {
+            "value": true
+        },
+        "ftpsState": {
+            "value": "FtpsOnly"
+        },
+        "sku": {
+            "value": "PremiumV3"
+        },
+        "skuCode": {
+            "value": "P2V3"
+        },
+        "numberOfWorkers": {
+            "value": "3"
+        },
+        "workerSize": {
+            "value": "7"
+        },
+        "workerSizeId": {
+            "value": "7"
+        }
+    }
+}

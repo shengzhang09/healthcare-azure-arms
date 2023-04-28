@@ -1,0 +1,20 @@
+#Create resource groups
+$rg1 = 'SJEHHC-RG01'
+$loc1 = 'EAST US'
+New-AzResourceGroup -Name $rg1 -Location $loc1
+
+$rg2 = 'SJEHHC-RG02'
+$loc2 = 'Southeast Asia'
+New-AzResourceGroup -Name $rg2 -Location $loc2
+
+
+# Deploy web apps including app services, service plans and insights
+New-AzResourceGroupDeployment `
+   -ResourceGroupName $rg1 `
+   -TemplateFile $HOME/service_app_template.json `
+   -TemplateParameterFile $HOME/service_app_1_parameters.json 
+   
+New-AzResourceGroupDeployment `
+   -ResourceGroupName $rg2 `
+   -TemplateFile $HOME/service_app_template.json `
+   -TemplateParameterFile $HOME/service_app_2_parameters.json 
