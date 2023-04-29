@@ -10,8 +10,8 @@
     },
     "parameters": {
         "name": {
-            "value": "SJEHHC-RG01-WebApp01-V0001"
-        },
+            "value": ""
+        },		
         "alwaysOn": {
             "value": true
         },
