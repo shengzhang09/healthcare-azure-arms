@@ -10,7 +10,7 @@
 			"defaultValue": "Global"
         },
 		"afdEndPointName": {
-			"type": "string",	
+			"type": "string"	
 		},
 		"originGroupName": {
 			"type": "string",
