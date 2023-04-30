@@ -21,7 +21,7 @@ jobs:
     # Checkout
     - name: Checkout
       uses: actions/checkout@v2
-      
+
     # Inject values into ARM parameters
     - name: Modify service_app_1_parameters.json
       uses: microsoft/variable-substitution@v1
@@ -43,4 +43,39 @@ jobs:
         files: 'frontdoor_parameters.json'
       env:
         parameters.firstAppServiceName.value: ${{env.AZURE_WEB_APP_1}}  
-        parameters.secondAppServiceName.value: ${{env.AZURE_WEB_APP_2}}   
+        parameters.secondAppServiceName.value: ${{env.AZURE_WEB_APP_2}}        
+      
+    # Authentication
+    # Set up the following secrets in your repository: AZURE_CREDENTIALS
+    # For details on usage of secrets, please refer https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS  }}
+                          
+    # Deployment of template    
+    - name: Deploy ARM Template - App Service 1
+      uses: azure/arm-deploy@v1
+      with:
+        # You can change these environment variables for your configuration:   AZURE_SUBSCRIPTION_ID, AZURE_RESOURCE_GROUP
+        resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP_1 }}
+        template: ./service_app_template.json  # Set this to the location of your template file
+        parameters: ./service_app_1_parameters.json # Set this to the location of your parameters file
+ 
+    # Deployment of template    
+    - name: Deploy ARM Template - App Service 2
+      uses: azure/arm-deploy@v1
+      with:
+        # You can change these environment variables for your configuration:   AZURE_SUBSCRIPTION_ID, AZURE_RESOURCE_GROUP
+        resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP_2 }}
+        template: ./service_app_template.json  # Set this to the location of your template file
+        parameters: ./service_app_2_parameters.json # Set this to the location of your parameters file 
+
+    # Deployment of template    
+    - name: Deploy ARM Template - Front Door
+      uses: azure/arm-deploy@v1
+      with:
+        # You can change these environment variables for your configuration:   AZURE_SUBSCRIPTION_ID, AZURE_RESOURCE_GROUP
+        resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP_1 }}
+        template: ./frontdoor_template.json  # Set this to the location of your template file
+        parameters: ./frontdoor_parameters.json # Set this to the location of your parameters file
