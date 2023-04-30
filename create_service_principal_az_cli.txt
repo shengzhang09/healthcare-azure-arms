@@ -1,0 +1,20 @@
+projectName="SJEHHC"
+
+location1="eastus"
+resourceGroupName1="SJEHHC-RG01"
+
+location2="southeastasia"
+resourceGroupName2="SJEHHC-RG02"
+
+appName="${projectName}-app-sp"
+
+# Create the resource group
+az group create --name $resourceGroupName1 --location $location1
+az group create --name $resourceGroupName2 --location $location2
+
+# Store the resource group ID in a variable
+scope1=$(az group list --query "[?contains(name, '$resourceGroupName1')].id" -o tsv)
+scope2=$(az group list --query "[?contains(name, '$resourceGroupName2')].id" -o tsv)
+
+# Create the service principal with contributor rights to the resource group we just created
+az ad sp create-for-rbac --name $appName --role Contributor --scopes $scope1 $scope2
