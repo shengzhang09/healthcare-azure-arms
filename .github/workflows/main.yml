@@ -1,0 +1,37 @@
+name: workflow to deploy an ARM Template to a resource group
+on: push
+
+env:
+  AZURE_SUBSCRIPTION_ID: << Subscription Id >>   # set this to your Azure Subscription Id
+  
+  AZURE_RESOURCE_GROUP_1: << Azure Resource Group 1>>   # set this to your Azure Resource group's name  
+  AZURE_RESOURCE_GROUP_2: << Azure Resource Group 1>>   # set this to your Azure Resource group's name
+  
+  AZURE_Location_1: EAST US
+  AZURE_Location_2: Southeast Asia
+  
+  AZURE_WEB_APP_1: SJEHHC-RG01-WebApp01-A001
+  AZURE_WEB_APP_2: SJEHHC-RG01-WebApp01-A002
+  
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    # Checkout
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    - name: Inject web app 1 variables
+      uses: microsoft/variable-substitution@v1
+      with:
+        files: 'service_app_1_parameters.json'
+      env: 
+        parameters.name.value: SJEHHC-RG01-WebApp01-A001
+      
+    - name: Inject web app 2 variables
+      uses: microsoft/variable-substitution@v1      
+      with:
+        files: 'service_app_2_parameters.json'
+      env:
+        parameters.name.value: SJEHHC-RG01-WebApp01-A002   
