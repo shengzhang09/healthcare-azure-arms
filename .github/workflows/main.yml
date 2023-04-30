@@ -27,11 +27,11 @@ jobs:
       with:
         files: 'service_app_1_parameters.json'
       env: 
-        parameters.name.value: SJEHHC-RG01-WebApp01-A001
+        parameters.name.value: ${{env.AZURE_WEB_APP_1}}
       
     - name: Inject web app 2 variables
       uses: microsoft/variable-substitution@v1      
       with:
         files: 'service_app_2_parameters.json'
       env:
-        parameters.name.value: SJEHHC-RG01-WebApp01-A002   
+        parameters.name.value: ${{env.AZURE_WEB_APP_2}}
