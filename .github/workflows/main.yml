@@ -1,17 +1,15 @@
 name: workflow to deploy an ARM Template to a resource group
 on: push
 
-env:
-  AZURE_SUBSCRIPTION_ID: << Subscription Id >>   # set this to your Azure Subscription Id
-  
-  AZURE_RESOURCE_GROUP_1: << Azure Resource Group 1>>   # set this to your Azure Resource group's name  
-  AZURE_RESOURCE_GROUP_2: << Azure Resource Group 1>>   # set this to your Azure Resource group's name
+env:  
+  AZURE_RESOURCE_GROUP_1: SJEHHC-RG01   # set this to your Azure Resource group's name  
+  AZURE_RESOURCE_GROUP_2: SJEHHC-RG02  # set this to your Azure Resource group's name
   
   AZURE_Location_1: EAST US
   AZURE_Location_2: Southeast Asia
   
-  AZURE_WEB_APP_1: SJEHHC-RG01-WebApp01-A001
-  AZURE_WEB_APP_2: SJEHHC-RG01-WebApp01-A002
+  AZURE_WEB_APP_1: SJEHHC-RG01-WebApp01-T001
+  AZURE_WEB_APP_2: SJEHHC-RG01-WebApp01-T002
   
 
 jobs:
