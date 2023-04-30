@@ -22,16 +22,25 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
       
-    - name: Inject web app 1 variables
+    # Inject values into ARM parameters
+    - name: Modify service_app_1_parameters.json
       uses: microsoft/variable-substitution@v1
       with:
         files: 'service_app_1_parameters.json'
       env: 
         parameters.name.value: ${{env.AZURE_WEB_APP_1}}
       
-    - name: Inject web app 2 variables
+    - name: Modify service_app_2_parameters.json
       uses: microsoft/variable-substitution@v1      
       with:
         files: 'service_app_2_parameters.json'
       env:
         parameters.name.value: ${{env.AZURE_WEB_APP_2}}
+
+    - name: Modify frontdoor_parameters.json
+      uses: microsoft/variable-substitution@v1      
+      with:
+        files: 'frontdoor_parameters.json'
+      env:
+        parameters.firstAppServiceName.value: ${{env.AZURE_WEB_APP_1}}  
+        parameters.secondAppServiceName.value: ${{env.AZURE_WEB_APP_2}}   
