@@ -43,7 +43,7 @@
         },
         "linuxFxVersion": {
             "type": "string",
-            "defaultValue": "NODE|lts",
+            "defaultValue": "NODE|18-lts",
             "metadata": {
               "description": "runtime stack"
             }
