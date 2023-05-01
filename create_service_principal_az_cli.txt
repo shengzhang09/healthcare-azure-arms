@@ -17,4 +17,4 @@ scope1=$(az group list --query "[?contains(name, '$resourceGroupName1')].id" -o 
 scope2=$(az group list --query "[?contains(name, '$resourceGroupName2')].id" -o tsv)
 
 # Create the service principal with contributor rights to the resource group we just created
-az ad sp create-for-rbac --name $appName --role Contributor --scopes $scope1 $scope2
+az ad sp create-for-rbac --name $appName --role Contributor --scopes $scope1 $scope2 --sdk-auth
