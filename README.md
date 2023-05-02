@@ -1,4 +1,5 @@
 # healthcare-azure-arms
+
 ## Deploy Azure ARM Templates via Github Actions
 1. Log in Azure Portal, open Cloud Shell in bash shell
 2. Copy and paste contents in "create_service_principal_az_cli.txt" to the bash shell and hit enter to execute the script for creating the service principal.
