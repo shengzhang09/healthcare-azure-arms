@@ -1,5 +1,5 @@
 # healthcare-azure-arms
-## Deploy Azure ARM Templates
+## Deploy Azure ARM Templates via Github Actions
 1. Log in Azure Portal, open Cloud Shell in bash shell
 2. Copy and paste contents in "create_service_principal_az_cli.txt" to the bash shell and hit enter to execute the script for creating the service principal.
 3. Copy the JSON output and store it as a GitHub secret within your GitHub repository. To do this, from your GitHub repository, select the Settings tab. From the left menu, select the Secrets drop-down, and then select Codespaces.
@@ -7,3 +7,9 @@
 Name: Enter AZURE_CREDENTIALS.
 Secret: Paste the JSON output that you copied earlier.
 5. Run workflow main.yaml in Actions to deploy all resources to Azure. 
+
+## Deploy Azure ARM Templates via PowerShell terminal in Azure Cloud Shell
+1. Log in Azure Portal, open Cloud Shell in PowerShell shell.
+2. Upload all ARM templates and parameters to pre-defined storage account.
+3. Copy and paste the script in powershell_cmds.txt to the terminal.
+4. Click 'Enter' to run the script.
