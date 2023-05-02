@@ -6,6 +6,7 @@
 3. Copy the JSON output and store it as a GitHub secret within your GitHub repository. To do this, from your GitHub repository, select the Settings tab. From the left menu, select the Secrets and variables drop-down button, and then select Actions.
 
 ATTENTION: User access must be confirmed for modifying repository secrets. If you are unable to do so, please follow the instruciton of Deploy Azure ARM Templates via PowerShell terminal in Azure Cloud Shell.  
+
 4. Enter the following values and then select Add secret:
 - Name: Enter AZURE_CREDENTIALS.
 - Secret: Paste the JSON output that you copied earlier.
