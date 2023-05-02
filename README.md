@@ -11,6 +11,11 @@ Secret: Paste the JSON output that you copied earlier.
 
 ## Deploy Azure ARM Templates via PowerShell terminal in Azure Cloud Shell
 1. Log in Azure Portal, open Cloud Shell in PowerShell shell.
-2. Upload all ARM templates and parameters to pre-defined storage account.
+2. Upload following ARM templates and corresponding parameters to pre-defined storage account.
+  - service_app_1_parameters.json
+  - service_app_2_parameters.json
+  - service_app_template.json
+  - frontdoor_parameters.json
+  - frontdoor_template.json
 3. Copy and paste the script in powershell_cmds.txt to the terminal.
 4. Click 'Enter' to run the script.
