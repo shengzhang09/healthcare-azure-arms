@@ -10,8 +10,8 @@ Secret: Paste the JSON output that you copied earlier.
 5. Run workflow main.yaml in Actions to deploy all resources to Azure. 
 
 ## Deploy Azure ARM Templates via PowerShell terminal in Azure Cloud Shell
-1. Log in Azure Portal, open Cloud Shell in PowerShell shell.
-2. Upload following ARM templates and corresponding parameters to pre-defined storage account.
+1. Log in Azure Portal, open Cloud Shell in the PowerShell terminal.
+2. Upload following ARM templates and corresponding parameters via the terminal.
   - service_app_1_parameters.json
   - service_app_2_parameters.json
   - service_app_template.json
