@@ -22,3 +22,15 @@ ATTENTION: User access must be confirmed for modifying repository secrets. If yo
   - frontdoor_template.json
 3. Copy and paste the script in powershell_cmds.txt to the terminal.
 4. Click 'Enter' to run the script.
+
+## Deploy Node Web Application to App Service using GitHub Actions
+1. You can quickly get started with GitHub Actions by using the App Service Deployment Center. This will automatically generate a workflow file based on your application stack and commit it to your GitHub repository in the correct directory.
+
+  1. Navigate to your webapp in the Azure portal
+  2. On the left side, click Deployment Center
+  3. Under Continuous Deployment (CI / CD), select GitHub
+  4. Next, select GitHub Actions
+  5. Use the dropdowns to select your GitHub repository, branch, and application stack
+  If the selected branch is protected, you can still continue to add the workflow file. Be sure to review your branch protections before continuing.
+  6.On the final screen, you can review your selections and preview the workflow file that will be committed to the repository. If the selections are correct, click Finish
+  This will commit the workflow file to the repository. The workflow to build and deploy your app will start immediately.
