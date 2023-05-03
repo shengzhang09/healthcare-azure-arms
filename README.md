@@ -32,5 +32,6 @@ You can quickly get started with GitHub Actions by using the App Service Deploym
   4. Next, select GitHub Actions
   5. Use the dropdowns to select your GitHub repository, branch, and application stack
   If the selected branch is protected, you can still continue to add the workflow file. Be sure to review your branch protections before continuing.
+  
   6.On the final screen, you can review your selections and preview the workflow file that will be committed to the repository. If the selections are correct, click Finish
   This will commit the workflow file to the repository. The workflow to build and deploy your app will start immediately.
