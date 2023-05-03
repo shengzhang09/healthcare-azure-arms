@@ -34,8 +34,9 @@ You can quickly get started with GitHub Actions by using the App Service Deploym
   If the selected branch is protected, you can still continue to add the workflow file. Be sure to review your branch protections before continuing.
   6.On the final screen, you can review your selections and preview the workflow file that will be committed to the repository. If the selections are correct, click Finish
   This will commit the workflow file to the repository. The workflow to build and deploy your app will start immediately.
-  7. Please note that there are changes need to be made to the workflow file. The executable workflow file is shown below.
-  '''
+  7. Please note that there are changes need to be made to the workflow file. An example of executable workflow file is shown below.
+  
+```
 name: Build and deploy Node.js app to Azure Web App - SJEHHC-RG01-WebApp01-F001
 
 on:
@@ -49,19 +50,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2 # Must v2 
 
       - name: Set up Node.js version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3 # Must v3
         with:
           node-version: '18.x'
 
       - name: npm install, build, and test
         run: |
           npm install
+          # Remove other npm build commands
           npm run build --if-present
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3 # Must v3
         with:
           name: node-app
           path: .
@@ -74,7 +76,7 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v3 # Must v3
         with:
           name: node-app
 
@@ -82,8 +84,8 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'SJEHHC-RG01-WebApp01-F001'
+          app-name: 'SJEHHC-RG01-WebApp01-F001' # Your app name
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_62CA1228018F4D04AFDBF4CB7BE91C1B }}
           package: .  
-  '''
+```
