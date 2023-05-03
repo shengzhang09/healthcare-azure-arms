@@ -34,7 +34,7 @@ You can quickly get started with GitHub Actions by using the App Service Deploym
   If the selected branch is protected, you can still continue to add the workflow file. Be sure to review your branch protections before continuing.
   6.On the final screen, you can review your selections and preview the workflow file that will be committed to the repository. If the selections are correct, click Finish
   This will commit the workflow file to the repository. The workflow to build and deploy your app will start immediately.
-  7. Please note that there are changes need to be made to the workflow file. An example of executable workflow file is shown below.
+  7. Please be aware that there are changes need to be made to the workflow file generated from the previous step. An example of executable workflow file is shown below.
   
 ```
 name: Build and deploy Node.js app to Azure Web App - SJEHHC-RG01-WebApp01-F001
