@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
 	"parameters": {
         "cdnProfileName": {
@@ -33,7 +33,15 @@
 		"defaultRouteName": {
 			"type": "string",
 			"defaultValue": "defaultRoute"
-		}
+		},
+        "resourceTags": {
+            "type": "object",
+			"defaultValue": {
+                "SJEHHC": "app service",                
+                "CostCenter": "9999",
+                "Environment": "Production"
+            }
+        }        
 	},
     "resources": [
         {
@@ -41,7 +49,7 @@
             "apiVersion": "2023-02-01-preview",
             "name": "[parameters('cdnProfileName')]",
             "location": "[parameters('location')]",
-            "tags": {},
+            "tags": "[parameters('resourceTags')]",
             "sku": {
                 "name": "Standard_AzureFrontDoor"
             },
