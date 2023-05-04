@@ -1,9 +1,10 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "name": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "DefaultWebApp"
         },
         "location": {
             "type": "string",
@@ -48,19 +49,34 @@
               "description": "runtime stack"
             }
         },
-	  "appInsightsName":{
-	      "type": "string",
-            "defaultValue": "[format('{0}-AppInsights', parameters('name'))]",
-            "metadata": {
-              "description": "The name of the app insights"
-            }
-	  },
+        "appInsightsName":{
+            "type": "string",
+                "defaultValue": "[format('{0}-AppInsights', parameters('name'))]",
+                "metadata": {
+                "description": "The name of the app insights"
+                }
+        },
         "workspaceName": {
           "type": "string",
-          "defaultValue": "[format('DefaultWorkspace-{0}', uniqueString(resourceGroup().id))]",
+          "defaultValue": "[format('{0}-LogAnalytics', parameters('name'))]",
           "metadata": {
             "description": "The name of the workspace"
           }
+        },
+        "resourceTags": {
+            "type": "object",
+			"defaultValue": {
+                "SJEHHC": "app service",                
+                "CostCenter": "9999",
+                "Environment": "Production"
+            }
+        },
+        "requestSource": {
+            "type": "string",
+            "defaultValue": "IbizaWebAppExtensionCreate",
+            "metadata": {
+                "description": "Source of Azure Resource Manager deployment"
+            }
         }
     },
     "variables": {
@@ -72,9 +88,7 @@
             "name": "[parameters('name')]",
             "type": "Microsoft.Web/sites",
             "location": "[parameters('location')]",
-            "tags": {
-                "SJEHHC": "app service"
-            },
+            "tags": "[parameters('resourceTags')]",
             "dependsOn": [
                 "[concat('microsoft.insights/components/', parameters('appInsightsName'))]",
                 "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
@@ -103,9 +117,8 @@
                     "alwaysOn": "[parameters('alwaysOn')]",
                     "ftpsState": "[parameters('ftpsState')]"
                 },
-				"serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+				"serverFarmId": "[concat(parameters('subscriptionId'),'/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
                 "clientAffinityEnabled": true,
-                "virtualNetworkSubnetId": null,
                 "httpsOnly": true,
                 "publicNetworkAccess": "Enabled"
             }
@@ -116,7 +129,7 @@
             "type": "Microsoft.Web/serverfarms",
             "location": "[parameters('location')]",
             "kind": "linux",
-            "tags": {},
+            "tags": "[parameters('resourceTags')]",
             "dependsOn": [],
             "sku": {
                 "Tier": "[parameters('sku')]",
@@ -132,43 +145,43 @@
             }
         },
         {
-            "apiVersion": "2020-02-02-preview",
+            "apiVersion": "2020-02-02",
             "name": "[parameters('appInsightsName')]",
             "type": "microsoft.insights/components",
             "location": "[parameters('location')]",
-            "tags": {},
-            "dependsOn": [
-                "newWorkspaceTemplate"
-            ],
+            "tags": "[parameters('resourceTags')]",
+            "kind": "other",
             "properties": {
                 "ApplicationId": "[parameters('name')]",
-                "Request_Source": "IbizaWebAppExtensionCreate",
-                "Flow_Type": "Redfield",
-                "Application_Type": "web"
-            }
+                "Application_Type": "web",                        
+                "Flow_Type": "Bluefield",                        
+                "Request_Source": "[parameters('requestSource')]",
+                "WorkspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]"
+            },
+			"dependsOn": [
+				"[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]"
+			]			
         },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "name": "newWorkspaceTemplate",
-            "properties": {
-                "mode": "Incremental",
-                "template": {
-                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-                    "contentVersion": "1.0.0.0",
-                    "parameters": {},
-                    "variables": {},
-                    "resources": [
-                        {
-                            "apiVersion": "2020-08-01",
-                            "name": "[parameters('workspaceName')]",
-                            "type": "Microsoft.OperationalInsights/workspaces",
-                            "location": "[parameters('location')]",
-                            "properties": {}
-                        }
-                    ]
-                }
-            }
-        }
+		{
+		  "type": "Microsoft.OperationalInsights/workspaces",
+		  "apiVersion": "2021-12-01-preview",
+		  "name": "[parameters('workspaceName')]",
+		  "location": "[parameters('location')]",
+		  "tags": {
+			"displayName": "Log Analytics",
+			"ProjectName": "[parameters('name')]"
+		  },
+		  "properties": {
+			"sku": {
+			  "name": "PerGB2018"
+			},
+			"retentionInDays": 120,
+			"features": {
+			  "searchVersion": 1,
+			  "legacy": 0,
+			  "enableLogAccessUsingOnlyResourcePermissions": true
+			}
+		  }
+		}
     ]
 }
