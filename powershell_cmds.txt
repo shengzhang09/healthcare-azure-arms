@@ -28,17 +28,15 @@ New-AzResourceGroup -Name $rg2 -Location $loc2
 New-AzResourceGroupDeployment `
    -ResourceGroupName $rg1 `
    -TemplateFile $HOME/service_app_template.json `
-   -TemplateParameterFile $HOME/service_app_1_parameters.json `
-   -name $app1 
+   -TemplateParameterFile $HOME/service_app_1_parameters.json
    
 New-AzResourceGroupDeployment `
    -ResourceGroupName $rg2 `
    -TemplateFile $HOME/service_app_template.json `
-   -TemplateParameterFile $HOME/service_app_2_parameters.json `
-   -name $app2
+   -TemplateParameterFile $HOME/service_app_2_parameters.json
 
 New-AzResourceGroupDeployment `
    -ResourceGroupName $rg1 `
    -TemplateFile $HOME/frontdoor_template.json `
-   -TemplateParameterFile $HOME/frontdoor_parameters.json `
+   -TemplateParameterFile $HOME/frontdoor_parameters.json
 
