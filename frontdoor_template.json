@@ -12,6 +12,14 @@
 		"afdEndPointName": {
 			"type": "string"	
 		},
+        "customDomainName": {
+			"type": "string",
+			"defaultValue": "sjkeh-healthcare-com"
+        },
+        "hostName": {
+            "type": "string",
+            "defaultValue": "sjkeh.healthcare.com"
+        },
 		"originGroupName": {
 			"type": "string",
 			"defaultValue": "originGroup00"
@@ -46,7 +54,7 @@
     "resources": [
         {
             "type": "Microsoft.Cdn/Profiles",
-            "apiVersion": "2023-02-01-preview",
+            "apiVersion": "2022-11-01-preview",
             "name": "[parameters('cdnProfileName')]",
             "location": "[parameters('location')]",
             "tags": "[parameters('resourceTags')]",
@@ -60,7 +68,7 @@
         },
         {
             "type": "Microsoft.Cdn/Profiles/AfdEndpoints",
-            "apiVersion": "2023-02-01-preview",
+            "apiVersion": "2022-11-01-preview",
             "name": "[concat(parameters('cdnProfileName'), '/', parameters('afdEndPointName'))]",
             "location": "[parameters('location')]",
             "dependsOn": [
@@ -71,8 +79,23 @@
             }
         },
         {
+            "type": "Microsoft.Cdn/profiles/customdomains",
+            "apiVersion": "2022-11-01-preview",
+            "name": "[concat(parameters('cdnProfileName'), '/', parameters('customDomainName'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Cdn/profiles', parameters('cdnProfileName'))]"
+            ],
+            "properties": {
+                "hostName": "[parameters('hostName')]",
+                "tlsSettings": {
+                    "certificateType": "ManagedCertificate",
+                    "minimumTlsVersion": "TLS12"
+                }
+            }
+        },        
+        {
             "type": "Microsoft.Cdn/Profiles/OriginGroups",
-            "apiVersion": "2023-02-01-preview",
+            "apiVersion": "2022-11-01-preview",
             "name": "[concat(parameters('cdnProfileName'), '/', parameters('originGroupName'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Cdn/Profiles', parameters('cdnProfileName'))]"
@@ -94,7 +117,7 @@
         },
         {
             "type": "Microsoft.Cdn/Profiles/OriginGroups/Origins",
-            "apiVersion": "2023-02-01-preview",
+            "apiVersion": "2022-11-01-preview",
             "name": "[concat(parameters('cdnProfileName'), '/', parameters('originGroupName'), '/',  parameters('firstOriginName'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Cdn/Profiles/OriginGroups', parameters('cdnProfileName'), parameters('originGroupName'))]"
@@ -112,7 +135,7 @@
         },
         {
             "type": "Microsoft.Cdn/Profiles/OriginGroups/Origins",
-            "apiVersion": "2023-02-01-preview",
+            "apiVersion": "2022-11-01-preview",
             "name": "[concat(parameters('cdnProfileName'), '/', parameters('originGroupName'), '/',  parameters('secondOriginName'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Cdn/Profiles/OriginGroups', parameters('cdnProfileName'), parameters('originGroupName'))]"
@@ -129,7 +152,7 @@
         },
         {
             "type": "Microsoft.Cdn/Profiles/AfdEndpoints/Routes",
-            "apiVersion": "2023-02-01-preview",
+            "apiVersion": "2022-11-01-preview",
             "name": "[concat(parameters('cdnProfileName'), '/', parameters('afdEndPointName'), '/',  parameters('defaultRouteName'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Cdn/Profiles/AfdEndpoints', parameters('cdnProfileName'), parameters('afdEndPointName'))]",
@@ -138,7 +161,6 @@
                 "[resourceId('Microsoft.Cdn/Profiles/OriginGroups/Origins', parameters('cdnProfileName'), parameters('originGroupName'), parameters('secondOriginName'))]"
             ],
             "properties": {
-                "customDomains": [],
                 "originGroup": {
                     "id": "[resourceId('Microsoft.Cdn/profiles/origingroups', parameters('cdnProfileName'), parameters('originGroupName'))]"
                 },
@@ -202,7 +224,12 @@
                         ],
                         "isCompressionEnabled": true
                     }
-                }
+                },
+                "customDomains": [
+                    {
+                        "id": "[resourceId('Microsoft.Cdn/profiles/customdomains', parameters('cdnProfileName'), parameters('customDomainName'))]"
+                    }
+                ]                             
             }
         }
     ]
