@@ -157,6 +157,7 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Cdn/Profiles/AfdEndpoints', parameters('cdnProfileName'), parameters('afdEndPointName'))]",
                 "[resourceId('Microsoft.Cdn/Profiles/OriginGroups', parameters('cdnProfileName'), parameters('originGroupName'))]",
+                "[resourceId('Microsoft.Cdn/profiles/customdomains', parameters('cdnProfileName'), parameters('customDomainName'))]",				                
                 "[resourceId('Microsoft.Cdn/Profiles/OriginGroups/Origins', parameters('cdnProfileName'), parameters('originGroupName'), parameters('firstOriginName'))]",
                 "[resourceId('Microsoft.Cdn/Profiles/OriginGroups/Origins', parameters('cdnProfileName'), parameters('originGroupName'), parameters('secondOriginName'))]"
             ],
