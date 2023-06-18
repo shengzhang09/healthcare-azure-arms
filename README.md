@@ -10,6 +10,7 @@ ATTENTION: User access must be confirmed for modifying repository secrets. If yo
 4. Enter the following values and then select Add secret:
 - Name: Enter AZURE_CREDENTIALS.
 - Secret: Paste the JSON output that you copied earlier.
+ATTENTION: If the secret is already exist, update the existing secret with the latest JSON output.
 5. Run workflow main.yaml in Actions to deploy all resources to Azure. 
 
 ## Deploy Azure ARM Templates via PowerShell terminal in Azure Cloud Shell
