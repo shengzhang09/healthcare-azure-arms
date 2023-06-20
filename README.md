@@ -1,4 +1,4 @@
-# healthcare-azure-arms
+# healthcare-azure-arms 
 
 ## Deploy Azure ARM Templates via Github Actions
 1. Log in Azure Portal, open Cloud Shell in bash shell.
